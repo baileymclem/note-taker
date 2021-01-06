@@ -1,52 +1,45 @@
-// ===============================================================================
-// ROUTING
-// ===============================================================================
-var fs = require("fs");
-const path = require("path");
+
+const { query } = require("express");
+let fs = require("fs");
 
 module.exports = function (app) {
 
-  console.log('hittt')
+  const notes = JSON.parse(fs.readFileSync("./db/db.json"));
 
+  //Read File
   app.get("/api/notes", (req, res) => {
-    fs.readFile("db/db.json", function (error, data) {
 
-      if (error) {
-        return console.log(error);
-      }
+    res.json(notes);
 
-      console.log(JSON.parse(data));
-      res.json(JSON.parse(data));
+  });
 
-    });
+  //Post File
+  app.post("/api/notes", (req, res) => {
+
+    let newNote = req.body;
+    newNote.id = notes.length + 1;
+    notes.push(newNote),
+
+      fs.writeFile("./db/db.json", JSON.stringify(notes, null, 2), (err) => {
+        if (err) {
+          console.log(err);
+        }
+
+      });
+
+    res.json({ ok: true });
+
   });
 
 
-  // app.post("/api/notes", (req, res) => {
+  //Delete File
+  app.delete("/api/notes/:id", (req, res) => {
+
+    console.log(notes[1].id);
+
+    //res.json({ ok: true });
+
+  });
 
 
-
-  //   });
-
-    //read what is currently in the db.json
-    //write to the file putting the req.body body inside
-
-
-
-
-  }
-
-
-
-
-// app.post("/api/notes", (req, res) => {
-//   const note = new note(req.body);
-
-//   note.save()
-//     .then((result) => {
-//       res.redirect("/api/notes");
-//     })
-//     .catch((err) => {
-//       console.log(err);
-//     })
-// })
+}
