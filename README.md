@@ -9,14 +9,17 @@ An application that can be used to write, save, and delete notes. This applicati
 ## Installation
 
 Clone repo https://github.com/baileymclem/note-taker
+
 Install dependencies using 'npm i'
+
 Run the application using 'npm start'
+
 Open localhost:8080 in your browser
 
 
 ## Usage
 
-[Demo](/demo.gif)
+![Image of  ](/demo.gif)
 
 
 ## Contributing
